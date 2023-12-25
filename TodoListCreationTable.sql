@@ -14,7 +14,7 @@ create table SCORE(
 idUtilisateur number(6) PRIMARY KEY,
 score number(20) DEFAULT 0,
 niveau NUMBER(10) DEFAULT 1,
-FOREIGN KEY(idUtilisateur) REFERENCES UTILISATEUR ON DELETE CASCADE,
+FOREIGN KEY(idUtilisateur) REFERENCES UTILISATEUR ,
 constraint posValues CHECK (SCORE>=0 AND NIVEAU>0)
 );
 
@@ -28,7 +28,21 @@ FOREIGN KEY(idCreateur) REFERENCES UTILISATEUR ON DELETE SET NULL
 
 create table TACHENCOURS(
 idTache number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
-intitule varchar2(256) not null,
+intitule varchar2(2048) not null,
+dateEcheance date, -- IF NULL => PERIODIQUE .ECHEANCE IN TABLE PERIODICITE
+lienExterne varchar2(2048),
+categorie varchar2(256), 
+status number(2) DEFAULT 0 CHECK(STATUS IN (0,1)), --1 if done -- 0 if not
+idCreateur number(6),
+idProjet number(6),
+FOREIGN KEY(idCreateur) REFERENCES UTILISATEUR ON DELETE SET NULL,
+FOREIGN KEY(idProjet) REFERENCES PROJET
+);
+create index categorieTache on TACHENCOURS (categorie);
+
+create table TACHEFINI(
+idTache number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
+intitule varchar2(2048) not null,
 dateEcheance date,
 lienExterne varchar2(2048),
 categorie varchar2(256), 
@@ -36,34 +50,22 @@ status number(2) DEFAULT 0 CHECK(STATUS IN (0,1)), --1 if done -- 0 if not
 idCreateur number(6),
 idProjet number(6),
 FOREIGN KEY(idCreateur) REFERENCES UTILISATEUR ON DELETE SET NULL,
-FOREIGN KEY(idProjet) REFERENCES PROJET ON DELETE CASCADE
+FOREIGN KEY(idProjet) REFERENCES PROJET
 );
-create index categorieTache on TACHENCOURS (categorie);
 
-create table TACHEFINI(
-idTache number(6) PRIMARY KEY,
-intitule varchar2(20) not null,
-dateEcheance date,
-lienExterne varchar2(20),
-categorie varchar2(10), 
-status number(2) DEFAULT 0 CHECK(STATUS IN (0,1)), --1 if done -- 0 if not
-idCreateur number(6),
-idProjet number(6),
-FOREIGN KEY(idCreateur) REFERENCES UTILISATEUR ON DELETE SET NULL,
-FOREIGN KEY(idProjet) REFERENCES PROJET ON DELETE CASCADE
-);
 
 create view TACHES AS 
 SELECT * FROM TACHENCOURS   
 UNION
 SELECT * FROM TACHEFINI;
 
-create table TACHEPERIODIQUE(
+
+create table PERIODICITE(
 idTache number(6) PRIMARY KEY,
 dateDebut date,
 dateFin date,
-periodicite interval day to second,
-FOREIGN KEY(idTache) REFERENCES TACHENCOURS ON DELETE CASCADE
+periode interval day to second,
+FOREIGN KEY(idTache) REFERENCES TACHENCOURS
 );
 
 create table DEPENDANCETACHE(
