@@ -28,10 +28,10 @@ FOREIGN KEY(idCreateur) REFERENCES UTILISATEUR ON DELETE SET NULL
 
 create table TACHENCOURS(
 idTache number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
-intitulé varchar2(20) not null,
+intitule varchar2(256) not null,
 dateEcheance date,
-lienExterne varchar2(20),
-categorie varchar2(10), 
+lienExterne varchar2(2048),
+categorie varchar2(256), 
 status number(2) DEFAULT 0 CHECK(STATUS IN (0,1)), --1 if done -- 0 if not
 idCreateur number(6),
 idProjet number(6),
@@ -42,7 +42,7 @@ create index categorieTache on TACHENCOURS (categorie);
 
 create table TACHEFINI(
 idTache number(6) PRIMARY KEY,
-intitulé varchar2(20) not null,
+intitule varchar2(20) not null,
 dateEcheance date,
 lienExterne varchar2(20),
 categorie varchar2(10), 
