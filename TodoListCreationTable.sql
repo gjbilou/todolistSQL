@@ -41,7 +41,7 @@ FOREIGN KEY(idProjet) REFERENCES PROJET
 create index categorieTache on TACHENCOURS (categorie);
 
 create table TACHEFINI(
-idTache number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
+idTache number(6) PRIMARY KEY,
 intitule varchar2(2048) not null,
 dateEcheance date,
 lienExterne varchar2(2048),
@@ -67,6 +67,16 @@ dateFin date,
 periode interval day to second,
 FOREIGN KEY(idTache) REFERENCES TACHENCOURS
 );
+
+create table LISTETACHE(
+idListe number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
+idCreateur number(6),
+idProjet number(6),
+FOREIGN KEY (idCreateur) REFERENCES UTILISATEUR,
+FOREIGN KEY (idProjet) REFERENCES PROJET
+);
+
+--create table PROGRAMMESCORE();
 
 create table DEPENDANCETACHE(
 idTache number(6),

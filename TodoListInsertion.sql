@@ -731,4 +731,24 @@ insert into TACHEUTILISATEUR (idTache, idUtilisateur) values (139, 94);
 insert into TACHEUTILISATEUR (idTache, idUtilisateur) values (48, 76);
 insert into TACHEUTILISATEUR (idTache, idUtilisateur) values (37, 36);
 
-
+--TABLE LISTETTACHE 
+insert into LISTETACHE (idCreateur, idProjet) values (13, 1);
+insert into LISTETACHE (idCreateur, idProjet) values (6, 2);
+insert into LISTETACHE (idCreateur, idProjet) values (3, 3);
+insert into LISTETACHE (idCreateur, idProjet) values (3, 4);
+insert into LISTETACHE (idCreateur, idProjet) values (16, 5);
+insert into LISTETACHE (idCreateur, idProjet) values (3, 6);
+insert into LISTETACHE (idCreateur, idProjet) values (18, 7);
+insert into LISTETACHE (idCreateur, idProjet) values (14, 8);
+insert into LISTETACHE (idCreateur, idProjet) values (13, 9);
+insert into LISTETACHE (idCreateur, idProjet) values (7, 10);
+insert into LISTETACHE (idCreateur, idProjet) values (11, 11);
+insert into LISTETACHE (idCreateur, idProjet) values (19, 12);
+insert into LISTETACHE (idCreateur, idProjet) values (7, 13);
+insert into LISTETACHE (idCreateur, idProjet) values (1, 14);
+insert into LISTETACHE (idCreateur, idProjet) values (13, 15);
+insert into LISTETACHE (idCreateur, idProjet) values (5, 16);
+insert into LISTETACHE (idCreateur, idProjet) values (13, 17);
+insert into LISTETACHE (idCreateur, idProjet) values (12, 18);
+insert into LISTETACHE (idCreateur, idProjet) values (10, 19);
+insert into LISTETACHE (idCreateur, idProjet) values (3, 20);
