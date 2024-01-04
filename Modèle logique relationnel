@@ -1,0 +1,97 @@
+Modèle logique relationnel:
+
+1. Utilisateur(
+	idUtilisateur : int PK,
+	nom : string,
+	prenom : string,
+	login : string,
+	motDePasse : string,
+	dateNaissance : date,
+	dateInscription : date
+);
+
+2. TACHENCOURS(
+	idTache : int PK,
+	intitulé : STRING,
+	dateEcheance : date,
+	lienExterne : STRING,
+	categorie : STRING,
+	status : int,
+	#idCreateur : int,
+	#idListe : int
+);
+		
+3. TACHEFINI(
+	idTache : int PK,
+	intitulé : STRING,
+	dateEcheance : date,
+	lienExterne : STRING,
+	categorie : STRING,
+	status : int,
+	#idCreateur : int,
+	#idListe : int
+);
+		
+4. PERIODICITE(
+	#idtache : int PK,
+	dateDebut : date,
+	dateFin : date
+	Periodz : interval
+);
+
+5. Projet(
+	idProjet : int PK,
+	NomProjet : string,
+	DescriptionProjet : CLOB
+);
+
+6.LISTE(
+	idListe : int PK,
+	#idProjet : int,
+	#idCreateur : int
+);
+
+7.PROGRAMMESCORE(
+	idProgramme : int PK,
+	#idListe : int,
+	scoreToAdd : int,
+	scoreToSub : int
+);
+
+8. Score(
+	#idUtilisateur : int PK,
+	score : int,
+	niveau : int
+)
+
+9. DependanceTache(
+	#idTache : int,
+	#idTacheDependante : int,
+	PRIMARY KEY (idtache,idTacheDependante) 
+)
+
+10. TacheUtilisateur(
+	#idtache : int,
+	#idUtilisateur : int,
+	PRIMARY KEY (idTache,idUtilisateur)
+)
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
