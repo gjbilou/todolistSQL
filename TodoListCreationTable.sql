@@ -81,7 +81,8 @@ idProgramme number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1) 
 idCreateur number(6),
 scoreToAdd number(6),
 scoreToSub number(6),
-FOREIGN KEY (idCreateur) REFERENCES UTILISATEUR ON DELETE CASCADE
+FOREIGN KEY (idCreateur) REFERENCES UTILISATEUR ON DELETE CASCADE, 
+CONSTRAINT diffScore CHECK (ABS(scoreToAdd-scoreToSub) <= 5)
 );
 
 create table DEPENDANCETACHE(
