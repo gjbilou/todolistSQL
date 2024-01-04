@@ -21,9 +21,15 @@ constraint posValues CHECK (SCORE>=0 AND NIVEAU>0)
 create table PROJET(
 idProjet number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
 nomProjet varchar2(20) not null,
-DescriptionProjet CLOB,
+DescriptionProjet CLOB
+);
+
+create table LISTE(
+idListe number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
 idCreateur number(6),
-FOREIGN KEY(idCreateur) REFERENCES UTILISATEUR ON DELETE SET NULL
+idProjet number(6),
+FOREIGN KEY (idCreateur) REFERENCES UTILISATEUR ON DELETE SET NULL,
+FOREIGN KEY (idProjet) REFERENCES PROJET ON DELETE CASCADE
 );
 
 create table TACHENCOURS(
@@ -34,9 +40,9 @@ lienExterne varchar2(2048),
 categorie varchar2(256), 
 status number(2) DEFAULT 0 CHECK(STATUS IN (0,1)), --1 if done -- 0 if not
 idCreateur number(6),
-idProjet number(6),
+idListe number(6),
 FOREIGN KEY(idCreateur) REFERENCES UTILISATEUR ON DELETE SET NULL,
-FOREIGN KEY(idProjet) REFERENCES PROJET
+FOREIGN KEY(idListe) REFERENCES LISTE ON DELETE SET NULL
 );
 create index categorieTache on TACHENCOURS (categorie);
 
@@ -48,9 +54,9 @@ lienExterne varchar2(2048),
 categorie varchar2(256), 
 status number(2) DEFAULT 0 CHECK(STATUS IN (0,1)), --1 if done -- 0 if not
 idCreateur number(6),
-idProjet number(6),
+idListe number(6),
 FOREIGN KEY(idCreateur) REFERENCES UTILISATEUR ON DELETE SET NULL,
-FOREIGN KEY(idProjet) REFERENCES PROJET
+FOREIGN KEY(idListe) REFERENCES LISTE ON delete set NULL
 );
 
 
@@ -68,15 +74,15 @@ periode interval day to second,
 FOREIGN KEY(idTache) REFERENCES TACHENCOURS
 );
 
-create table LISTETACHE(
-idListe number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
-idCreateur number(6),
-idProjet number(6),
-FOREIGN KEY (idCreateur) REFERENCES UTILISATEUR,
-FOREIGN KEY (idProjet) REFERENCES PROJET
-);
 
---create table PROGRAMMESCORE();
+
+create table PROGRAMMESCORE(
+idProgramme number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
+idListe number(6),
+scoreToAdd number(6),
+scoreToSub number(6),
+FOREIGN KEY (idListe) REFERENCES LISTE ON DELETE CASCADE
+);
 
 create table DEPENDANCETACHE(
 idTache number(6),
