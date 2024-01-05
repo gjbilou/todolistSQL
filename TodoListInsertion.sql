@@ -1,5 +1,6 @@
 set define off;
 --table Utilisateur 
+insert into Utilisateur (nom, prenom, adresse, motDePasse, dateNaissance) values ('admin', 'admin', 'admin', 'adminadmin', '1-JAN-0001'); -- user default (for program score to users with no custom program)
 insert into Utilisateur (nom, prenom, adresse, motDePasse, dateNaissance) values ('Janouch', 'Genevra', 'France', 'ayjNlUC3', '15-Oct-1999');
 insert into Utilisateur (nom, prenom, adresse, motDePasse, dateNaissance) values ('Oman', 'Ursala', 'France', 'biZse8JK', '11-Feb-1999');
 insert into Utilisateur (nom, prenom, adresse, motDePasse, dateNaissance) values ('Turrell', 'Bernadina', 'France', 'qdh9xQlT', '19-Sep-2002');
