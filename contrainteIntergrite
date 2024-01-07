@@ -1,0 +1,18 @@
+Table Utilisateur:
+	login unique crée automatiqument par un trigger.
+	Mot de passe contenant strictement des lettre majiscule et miniscule, des chiffres et '_'.
+	
+Score table:
+	score doit être positive et niveau superieur à 1. 
+	
+TacheNCours et TacheFini:
+	status doit etre egale à 0 ou 1.
+	dateEcheance doit etre plus grande que la dateAccomplissement.
+	
+ProgrammeScore: 
+	idCreateur unique pour n'avoir qu'un programme de score maximum par utilisateur.
+	Difference entre scoretoAdd et scoretoSub ne peut etre plus grand que 5.
+	À voir dans des triggers: Si un utilisateur n'a pas de programmes de score defini, la valeur par defaut utilisé comme scoretoAdd et 				scoretoSub est 5.
+	
+DependanceTache:
+	l'indentifiants d'une tache et sa dependance ne peuvent etre egale pour eviter les plus evidentes des dependances cycliques.

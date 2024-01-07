@@ -17,6 +17,7 @@ Modèle logique relationnel:
 	lienExterne : STRING,
 	categorie : STRING,
 	status : int,
+	dateAccomplissement : date,
 	#idCreateur : int,
 	#idListe : int
 );
@@ -28,6 +29,7 @@ Modèle logique relationnel:
 	lienExterne : STRING,
 	categorie : STRING,
 	status : int,
+	dateAccomplissement : date,
 	#idCreateur : int,
 	#idListe : int
 );
@@ -53,7 +55,7 @@ Modèle logique relationnel:
 
 7.PROGRAMMESCORE(
 	idProgramme : int PK,
-	#idListe : int,
+	#idUtilisateur : int,
 	scoreToAdd : int,
 	scoreToSub : int
 );
