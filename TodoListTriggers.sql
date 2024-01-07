@@ -37,6 +37,7 @@ FOR EACH ROW
 WHEN (NEW.status = 1)
 DECLARE
     scoreChange NUMBER;
+    userHasProgrammeScore NUMBER;
     cursor c1 is
         SELECT idUtilisateur FROM TACHEUTILISATEUR WHERE idTache = :NEW.idTache;
 BEGIN
@@ -45,8 +46,17 @@ BEGIN
 
     -- Pour chaque utilisateur associé à la tâche
     FOR userRecord IN c1 LOOP
-        -- Récupérer le score à ajouter
-        SELECT scoreToAdd INTO scoreChange FROM PROGRAMMESCORE WHERE idCreateur = userRecord.idUtilisateur;
+        -- Vérifier si l'utilisateur a un programme score
+        SELECT COUNT(*) INTO userHasProgrammeScore FROM PROGRAMMESCORE WHERE idCreateur = userRecord.idUtilisateur;
+
+        IF userHasProgrammeScore > 0 THEN
+            -- Récupérer le score à ajouter
+            SELECT scoreToAdd INTO scoreChange FROM PROGRAMMESCORE WHERE idCreateur = userRecord.idUtilisateur;
+        ELSE
+            -- Utiliser la valeur par défaut
+            scoreChange := 5;
+        END IF;
+
         -- Mettre à jour le score de l'utilisateur
         UPDATE SCORE SET score = score + scoreChange WHERE idUtilisateur = userRecord.idUtilisateur;
     END LOOP;
@@ -86,6 +96,7 @@ COMPOUND TRIGGER
 END makeLogin;
 /
 
+-------------------------------------------------------------------------------------
 
 CREATE OR REPLACE TRIGGER ClonePeriodicTasks
 AFTER INSERT ON PERIODICITE
