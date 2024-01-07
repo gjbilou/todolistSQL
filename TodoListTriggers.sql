@@ -120,3 +120,23 @@ BEGIN
     END LOOP;
 END;
 /
+
+---------------------------------------------------------------------------------------
+
+CREATE OR REPLACE TRIGGER UpdateLevel
+AFTER UPDATE OF score ON SCORE
+FOR EACH ROW
+DECLARE
+    nextLevel NUMBER;
+BEGIN
+    -- Calculer le seuil pour le niveau suivant
+    nextLevel := 100 * POWER(2, :NEW.niveau - 1);
+
+    -- Vérifier si le score mis à jour atteint ou dépasse le seuil
+    IF :NEW.score >= nextLevelThreshold THEN
+        -- Mettre à jour le niveau
+        UPDATE SCORE SET niveau = niveau + 1 WHERE idUtilisateur = :NEW.idUtilisateur;
+    END IF;
+END;
+/
+
