@@ -9,10 +9,10 @@ HAVING COUNT(TC.idTache) >= 5;
 
 --  2.
 SELECT idProgramme,
-     SUM(CASE 
-            WHEN PS.idCreateur IS NULL THEN 5 
-            ELSE PS.scoreToAdd 
-        END) AS TotalPointsGagnes
+	 SUM(CASE 
+			WHEN PS.idCreateur IS NULL THEN 5 
+			ELSE PS.scoreToAdd 
+		END) AS TotalPointsGagnes
 FROM TACHES T
 JOIN TACHEUTILISATEUR TU ON TU.idUtilisateur = T.idCreateur
 LEFT JOIN PROGRAMMESCORE PS ON PS.idCreateur = T.idCreateur
@@ -39,10 +39,10 @@ GROUP BY T.idTache, T.intitule;
 
 --  5.
 SELECT TU.idUtilisateur,
-    SUM(CASE 
-            WHEN PS.idCreateur IS NULL THEN 5 
-            ELSE PS.scoreToAdd 
-        END) AS TotalPointsGagnes
+	SUM(CASE 
+			WHEN PS.idCreateur IS NULL THEN 5 
+			ELSE PS.scoreToAdd 
+		END) AS TotalPointsGagnes
 FROM TACHENCOURS TC
 JOIN TACHEUTILISATEUR TU ON TC.idTache = TU.idTache
 LEFT JOIN PROGRAMMESCORE PS ON TU.idUtilisateur = PS.idCreateur
