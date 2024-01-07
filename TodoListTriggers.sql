@@ -85,3 +85,27 @@ COMPOUND TRIGGER
 
 END makeLogin;
 /
+
+
+CREATE OR REPLACE TRIGGER ClonePeriodicTasks
+AFTER INSERT ON PERIODICITE
+FOR EACH ROW
+DECLARE
+    nextDate_v DATE;
+BEGIN
+    -- Initialiser la prochaine date de la tâche périodique
+    nextDate_v := :NEW.dateDebut + :NEW.periode;
+
+    -- Continuer à cloner la tâche jusqu'à la date de fin
+    WHILE nextDate_v <= :NEW.dateFin LOOP
+        -- Insertion d'une nouvelle tâche dans TACHENCOURS basée sur la tâche référencée
+        INSERT INTO TACHENCOURS (intitule, dateEcheance, lienExterne, categorie, status, idCreateur, idListe)
+        SELECT intitule, nextDate_v, lienExterne, categorie, status, idCreateur, idListe
+        FROM TACHENCOURS
+        WHERE idTache = :NEW.idTache;
+
+        -- Calculer la prochaine date en fonction de la périodicité
+        nextDate_v := nextDate_v + :NEW.periode;
+    END LOOP;
+END;
+/
