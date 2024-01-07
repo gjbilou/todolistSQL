@@ -53,20 +53,32 @@ END;
 
 --------------------------------------------------------------------------------------
 
+-- i need a trigger that will create the login for users from their first name and last name and add record in score table
+CREATE OR REPLACE TRIGGER makeLogin
+FOR INSERT ON utilisateur
+COMPOUND TRIGGER
 
+    BEFORE EACH ROW IS
+    BEGIN
+        -- Génération du login pour chaque nouvel utilisateur
+        DECLARE
+            nomToUse VARCHAR2(7);
+        BEGIN
+            IF LENGTH(:NEW.nom) > 7 THEN
+                nomToUse := SUBSTR(:NEW.nom, 1, 7);
+            ELSE
+                nomToUse := :NEW.nom;
+            END IF;
+            :NEW.login := LOWER(SUBSTR(:NEW.prenom, 1, 1) || nomToUse);
+        END;
+    END BEFORE EACH ROW;
 
--- i need a trigger that will create the login for users from their first name and last name
-create or replace trigger makeLogin
-before insert on utilisateur
-for each row 
-declare
-	nomToUse varchar2(7);
-begin
-	if length(:new.nom) > 7
-	then
-		nomToUse := substr(:new.nom, 1, 7);
-	else
-		nomToUse := :new.nom;
-	end if;
-	:new.login := lower(substr(:new.prenom, 1, 1) || nomToUse);
-end;
+    AFTER EACH ROW IS
+    BEGIN
+        -- Insertion dans la table SCORE après chaque insertion dans UTILISATEUR
+        INSERT INTO SCORE (idUtilisateur, score, niveau)
+        VALUES (:NEW.idUtilisateur, 0, 1);
+    END AFTER EACH ROW;
+
+END makeLogin;
+/
