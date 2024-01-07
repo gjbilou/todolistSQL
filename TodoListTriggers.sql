@@ -80,13 +80,14 @@ COMPOUND TRIGGER
 
 			WHILE countLogin != 0 LOOP
 				concatToLogin := concatToLogin + 1;
+				loginTmp := LOWER(SUBSTR(:NEW.prenom, 1, 1) || nomToUse || TO_CHAR(concatToLogin));
 
 				SELECT COUNT(*) 
 				INTO countLogin
 				FROM UTILISATEUR 
 				WHERE login = loginTmp;
 			END LOOP
-			:NEW.login := LOWER(SUBSTR(:NEW.prenom, 1, 1) || nomToUse);
+			:NEW.login := loginTmp;
 		END;
 	END BEFORE EACH ROW;
 
