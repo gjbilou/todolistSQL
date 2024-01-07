@@ -41,6 +41,7 @@ categorie varchar2(256),
 status number(2) DEFAULT 0 CHECK(STATUS IN (0,1)), --1 if done -- 0 if not
 idCreateur number(6),
 idListe number(6),
+dateAccomplissement date check (dateAccomplissement <= dateEcheance),
 FOREIGN KEY(idCreateur) REFERENCES UTILISATEUR ON DELETE SET NULL,
 FOREIGN KEY(idListe) REFERENCES LISTE ON DELETE SET NULL
 );
