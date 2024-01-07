@@ -62,13 +62,30 @@ COMPOUND TRIGGER
 	BEFORE EACH ROW IS
 	BEGIN
 		DECLARE
-			nomToUse VARCHAR2(7);
+			countLogin number;
+			nomToUse VARCHAR2(10);
+			loginTmp VARCHAR2(10);
+			concatToLogin number(2) := 0;
 		BEGIN
 			IF LENGTH(:NEW.nom) > 7 THEN
 				nomToUse := SUBSTR(:NEW.nom, 1, 7);
 			ELSE
 				nomToUse := :NEW.nom;
 			END IF;
+			loginTmp := LOWER(SUBSTR(:NEW.prenom, 1, 1) || nomToUse || TO_CHAR(concatToLogin));
+			SELECT COUNT(*) 
+			INTO countLogin
+			FROM UTILISATEUR 
+			WHERE login = loginTmp;
+
+			WHILE countLogin != 0 LOOP
+				concatToLogin := concatToLogin + 1;
+
+				SELECT COUNT(*) 
+				INTO countLogin
+				FROM UTILISATEUR 
+				WHERE login = loginTmp;
+			END LOOP
 			:NEW.login := LOWER(SUBSTR(:NEW.prenom, 1, 1) || nomToUse);
 		END;
 	END BEFORE EACH ROW;

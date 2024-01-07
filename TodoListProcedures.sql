@@ -19,11 +19,7 @@ is
 
 begin
 	for c1_rec in c1 loop
-		if c1_rec.dateEcheance > SYSDATE and c1_rec.status = 1 
-		then 
-			totalPositif := totalPositif + c1_rec.scoreToAdd;
-
-		elsif c1_rec.dateEcheance < SYSDATE and c1_rec.status = 1 
+		if c1_rec.status = 1 
 		then 
 			totalPositif := totalPositif + c1_rec.scoreToAdd;
 
