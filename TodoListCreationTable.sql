@@ -72,12 +72,11 @@ SELECT * FROM TACHEFINI;
 
 create table PERIODICITE(
 idTache number(6) PRIMARY KEY,
-dateDebut date,
-dateFin date,
-periode interval day to second,
+dateDebut date not null,
+dateFin date not null,
+periode interval day to second not null,
 FOREIGN KEY(idTache) REFERENCES TACHENCOURS
 );
-
 
 
 create table PROGRAMMESCORE(
