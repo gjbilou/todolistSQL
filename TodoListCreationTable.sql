@@ -3,7 +3,7 @@ idUtilisateur number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1
 nom varchar2(20) not null,
 prenom varchar2(20) not null,
 adresse varchar2(30) not null,
-login varchar2(10) invisible unique, -- login serait créé automatiquement et remis à l'utilisateur pour assurer l'unicité
+login varchar2(10) unique, -- login serait créé automatiquement et remis à l'utilisateur pour assurer l'unicité
 motDePasse varchar2(10) CONSTRAINT checkMDP CHECK(REGEXP_LIKE(motDePasse,'^[A-Za-z0-9_]+$')) not null,
 dateNaissance date not null,
 dateInscription date invisible default SYSDATE

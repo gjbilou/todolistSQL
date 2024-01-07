@@ -79,7 +79,7 @@ COMPOUND TRIGGER
 		VALUES (:NEW.idUtilisateur, 0, 1);
 	END AFTER EACH ROW;
 
-END makeLogin;
+END initUser;
 /
 
 --------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ DECLARE
 BEGIN
 	nextLevel := 100 * POWER(2, :NEW.niveau - 1);
 
-	IF :NEW.score >= nextLevelThreshold THEN
+	IF :NEW.score >= nextLevel THEN
 		UPDATE SCORE SET niveau = niveau + 1 WHERE idUtilisateur = :NEW.idUtilisateur;
 	END IF;
 END;
