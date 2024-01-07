@@ -47,4 +47,6 @@ LEFT JOIN
     DEPENDANCETACHE D ON T.idTache = D.idTacheDependante
 GROUP BY 
     T.idTache, T.intitule;
+    
+
 
