@@ -50,3 +50,25 @@ GROUP BY
     
 
 
+--  5.
+SELECT
+    TU.idUtilisateur,
+    SUM(CASE 
+            WHEN PS.idCreateur IS NULL THEN 5 
+            ELSE PS.scoreToAdd 
+        END) AS TotalPointsGagnes
+FROM
+    TACHENCOURS TC
+JOIN
+    TACHEUTILISATEUR TU ON TC.idTache = TU.idTache
+LEFT JOIN
+    PROGRAMMESCORE PS ON TU.idUtilisateur = PS.idCreateur
+WHERE
+    TC.status = 1 AND 
+    TC.dateAccomplissement >= TRUNC(SYSDATE, 'IW') AND
+    TC.dateAccomplissement < TRUNC(SYSDATE, 'IW') + 7
+GROUP BY
+    TU.idUtilisateur
+ORDER BY
+    TotalPointsGagnes DESC
+FETCH FIRST 10 ROWS ONLY;
