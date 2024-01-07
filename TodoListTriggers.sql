@@ -24,11 +24,12 @@ BEGIN
 	END IF;
 END;
 /
+--------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 
 CREATE OR REPLACE TRIGGER updateScoreCompletion
-AFTER UPDATE OF status ON TACHENCOURS
+BEFORE UPDATE OF status ON TACHENCOURS
 FOR EACH ROW
 WHEN (NEW.status = 1)
 DECLARE
@@ -38,7 +39,7 @@ DECLARE
 		SELECT idUtilisateur FROM TACHEUTILISATEUR WHERE idTache = :NEW.idTache;
 BEGIN
 	--UPDATE TACHENCOURS SET dateAccomplissement = SYSDATE WHERE idTache = :NEW.idTache;
-
+    :NEW.dateAccomplissement := sysdate;
 	FOR userRecord IN c1 LOOP
 		SELECT COUNT(*) INTO userHasProgrammeScore FROM PROGRAMMESCORE WHERE idCreateur = userRecord.idUtilisateur;
 
