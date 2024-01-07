@@ -35,13 +35,13 @@ FOREIGN KEY (idProjet) REFERENCES PROJET ON DELETE CASCADE
 create table TACHENCOURS(
 idTache number(6) GENERATED ALWAYS AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
 intitule varchar2(2048) not null,
-dateEcheance date, -- IF NULL => PERIODIQUE .ECHEANCE IN TABLE PERIODICITE
+dateEcheance date, 
 lienExterne varchar2(2048),
 categorie varchar2(256), 
 status number(2) DEFAULT 0 CHECK(STATUS IN (0,1)), --1 if done -- 0 if not
 idCreateur number(6),
 idListe number(6),
-dateAccomplissement date,
+dateAccomplissement date default null,
 FOREIGN KEY(idCreateur) REFERENCES UTILISATEUR ON DELETE SET NULL,
 FOREIGN KEY(idListe) REFERENCES LISTE ON DELETE SET NULL,
 constraint dateAcc1 check (dateAccomplissement <= dateEcheance)

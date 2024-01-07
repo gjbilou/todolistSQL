@@ -36,17 +36,20 @@ AFTER UPDATE OF status ON TACHENCOURS
 FOR EACH ROW
 WHEN (NEW.status = 1)
 DECLARE
-	scoreChange NUMBER;
-	cursor c1 is
-		SELECT idUtilisateur FROM TACHEUTILISATEUR WHERE idTache = :NEW.idTache;
+    scoreChange NUMBER;
+    cursor c1 is
+        SELECT idUtilisateur FROM TACHEUTILISATEUR WHERE idTache = :NEW.idTache;
 BEGIN
-	-- Pour chaque utilisateur associé à la tâche
-	FOR userRecord IN c1 LOOP
-	-- Récupérer le score à ajouter
-		SELECT scoreToAdd INTO scoreChange FROM PROGRAMMESCORE WHERE idCreateur = userRecord.idUtilisateur;
-		-- Mettre à jour le score de l'utilisateur
-		UPDATE SCORE SET score = score + scoreChange WHERE idUtilisateur = userRecord.idUtilisateur;
-	END LOOP;
+    -- Mise à jour de la date d'accomplissement de la tâche
+    UPDATE TACHENCOURS SET dateAccomplissement = SYSDATE WHERE idTache = :NEW.idTache;
+
+    -- Pour chaque utilisateur associé à la tâche
+    FOR userRecord IN c1 LOOP
+        -- Récupérer le score à ajouter
+        SELECT scoreToAdd INTO scoreChange FROM PROGRAMMESCORE WHERE idCreateur = userRecord.idUtilisateur;
+        -- Mettre à jour le score de l'utilisateur
+        UPDATE SCORE SET score = score + scoreChange WHERE idUtilisateur = userRecord.idUtilisateur;
+    END LOOP;
 END;
 /
 
